@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38b51eec-391f-4b7d-9e07-c782942fc587" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="3546qAIReL8JaJzL6qo4WxjeLBt" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Basic Problems.executor": "Run",
+    "Python.BasicProblems.executor": "Run",
+    "Python.DictionaryProblems.executor": "Run",
+    "Python.FunctionProblems.executor": "Run",
+    "Python.ListProblems.executor": "Run",
+    "Python.StringProblems.executor": "Run",
+    "Python.abstractiondemo.executor": "Run",
+    "Python.assignment.executor": "Run",
+    "Python.callGreet.executor": "Run",
+    "Python.greet.executor": "Run",
+    "Python.importdemo.executor": "Run",
+    "Python.inputMiniProblem.executor": "Run",
+    "Python.iterate.executor": "Run",
+    "Python.listMiniProblem.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.person.executor": "Run",
+    "Python.setProblems.executor": "Run",
+    "Python.string.executor": "Run",
+    "Python.stringDemo.executor": "Run",
+    "Python.superdemo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/linjz/OneDrive/Desktop/Day3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\linjz\OneDrive\Desktop\Revature\Day3\OOProject\Assignments" />
+      <recent name="C:\Users\linjz\OneDrive\Desktop\Revature\Day3\OOProject" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Day3" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.27397.106" />
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38b51eec-391f-4b7d-9e07-c782942fc587" name="Changes" comment="" />
+      <created>1762357184618</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762357184618</updated>
+      <workItem from="1762357185923" duration="17286000" />
+      <workItem from="1762379723428" duration="2326000" />
+      <workItem from="1762441255371" duration="816000" />
+      <workItem from="1762451643892" duration="167000" />
+      <workItem from="1762451834466" duration="1796000" />
+      <workItem from="1762454416040" duration="116000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Day3$ListProblems.coverage" NAME="ListProblems Coverage Results" MODIFIED="1762365446823" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$DictionaryProblems.coverage" NAME="DictionaryProblems Coverage Results" MODIFIED="1762371298655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$importdemo.coverage" NAME="importdemo Coverage Results" MODIFIED="1762380420064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$Basic_Problems.coverage" NAME="Basic Problems Coverage Results" MODIFIED="1762364286925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$setProblems.coverage" NAME="setProblems Coverage Results" MODIFIED="1762370384264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$StringProblems.coverage" NAME="StringProblems Coverage Results" MODIFIED="1762370883729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$string.coverage" NAME="string Coverage Results" MODIFIED="1762363242095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$iterate.coverage" NAME="iterate Coverage Results" MODIFIED="1762380953867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$FunctionProblems.coverage" NAME="FunctionProblems Coverage Results" MODIFIED="1762364537361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$BasicProblems.coverage" NAME="BasicProblems Coverage Results" MODIFIED="1762371916614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject/Assignments" />
+    <SUITE FILE_PATH="coverage/Day3$inputMiniProblem.coverage" NAME="inputMiniProblem Coverage Results" MODIFIED="1762374783713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$person.coverage" NAME="person Coverage Results" MODIFIED="1762358113408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$abstractiondemo.coverage" NAME="abstractiondemo Coverage Results" MODIFIED="1762359089940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$greet.coverage" NAME="greet Coverage Results" MODIFIED="1762362093979" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$main.coverage" NAME="main Coverage Results" MODIFIED="1762379742961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Day3$stringDemo.coverage" NAME="stringDemo Coverage Results" MODIFIED="1762363358905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$listMiniProblem.coverage" NAME="listMiniProblem Coverage Results" MODIFIED="1762381518876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$callGreet.coverage" NAME="callGreet Coverage Results" MODIFIED="1762362422950" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$assignment.coverage" NAME="assignment Coverage Results" MODIFIED="1762359785506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+    <SUITE FILE_PATH="coverage/Day3$superdemo.coverage" NAME="superdemo Coverage Results" MODIFIED="1762360517361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/OOProject" />
+  </component>
+</project>
