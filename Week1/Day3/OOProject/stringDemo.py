@@ -1,0 +1,12 @@
+basic = " Hello world "
+print(basic.strip())
+print(basic.lower())
+print(basic.upper())
+print(basic.lstrip())
+print(basic.rstrip())
+print(basic.replace(" ", "/"))
+print(basic.count(" "))
+print(basic.find("H"))
+print(basic.index(" ", 1))
+print(basic.join("Round 2"))
+print(basic.join("///"))
