@@ -1,0 +1,7 @@
+{
+    "name": "alice",
+    "age": 20,
+    "city": "houston"
+}
+
+Copied from text.txt
