@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+</head>
+<body>
+<h1>Tasks</h1>
+{% if len > 0 %}
+    {%for task, status in tasks.items()%}
+        <li>
+            {{task}}  {{status}}
+            <form action = "{{url_for('update_task')}}" style="display: inline-block;">
+                <button type="submit" name="update" value="complete {{task}}">Complete</button>
+            </form>
+            <form action = "{{url_for('delete_task')}}" style="display: inline-block;">
+                <button type="Submit" name="update" value="delete {{task}}">Delete</button><br>
+            </form>
+        </li>
+    {%endfor%}
+{% else %}
+    <h3>Empty List</h3>
+{% endif %}
+
+<form action="{{url_for('add_task')}}" method="post">
+    <h3>Add Task: </h3> <input type="text" name="task"/> <input type="submit" value="Submit"><br>
+</form>
+</body>
+</html>
