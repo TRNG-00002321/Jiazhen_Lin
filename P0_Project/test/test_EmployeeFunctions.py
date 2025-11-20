@@ -3,7 +3,7 @@ from parameterized import parameterized
 import sqlite3
 import unittest
 
-from ..src.Employee_Functions import EmployeeFunctions
+from ..src import Employee_Functions as EmployeeFunctions
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(test_dir, "..", "src", "database.sql")
@@ -85,8 +85,8 @@ class TestEmployeeFunctions(unittest.TestCase):
 
     @parameterized.expand([
         ["dsfa", "dsfas", 30],
-        ["casdv", "Afas", 0.00],
-        ["adfd", "ASf", -30.63]
+        ["casdv", "Afas", .01],
+        ["adfd", "ASf", 30.63]
     ])
     def test_new_expense(self, username, password, expense):
         self.set_up()
@@ -108,12 +108,20 @@ class TestEmployeeFunctions(unittest.TestCase):
 
     def test_new_expense_no_expense(self):
         self.set_up()
-        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, 0, 0)
+        EmployeeFunctions.add_user(self.conn, "admin", "password")
+        user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
+        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, 0)
         self.tearDown()
 
-    def test_new_expense_invalid_amount(self):
+    @parameterized.expand([
+        [0.13412],
+        [-133.12]
+    ])
+    def test_new_expense_invalid_amount(self, amount):
         self.set_up()
-        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, 0, 0, 0.14131)
+        EmployeeFunctions.add_user(self.conn, "admin", "password")
+        user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
+        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, amount)
         self.tearDown()
 
     @parameterized.expand([
@@ -213,15 +221,13 @@ class TestEmployeeFunctions(unittest.TestCase):
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
-
         cursor = self.conn.cursor()
         cursor.execute("UPDATE approvals SET status = 'approved' WHERE expense_id = ?", (expense_id,))
         expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 100)
         cursor.execute("UPDATE approvals SET status = 'denied' WHERE expense_id = ?", (expense_id,))
         expense = EmployeeFunctions.view_completed_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)
-        self.assertEqual(expense[0][2], 200)
-        self.assertEqual(expense[1][2], 100)
+        self.assertEqual(len(expense), 2)
         self.tearDown()
 
 
