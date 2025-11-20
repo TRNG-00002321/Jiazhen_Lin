@@ -19,7 +19,7 @@ def expense_id_exists(connection, expense_id:int) -> bool:
         if cursor.fetchone() is not None: return True
     return False
 
-def new_user(connection, username:str, encoded_password:str) -> None:
+def add_user(connection, username:str, encoded_password:str) -> None:
     with connection:
         cursor = connection.cursor()
         cursor.execute("""INSERT INTO users (username, password, role)
@@ -35,7 +35,7 @@ def log_in(connection, username:str, encoded_password:str) -> list:
         result = cursor.fetchone()
         return result
 
-def new_expense(connection, user_id:int, amount:float, description:str, date) -> int:
+def add_expense(connection, user_id:int, amount:float, description:str, date) -> int:
     with connection:
         cursor = connection.cursor()
         cursor.execute("""INSERT INTO expenses (user_id, amount, description, date)
@@ -47,7 +47,7 @@ def new_pending_approval(connection, expense_id:int) -> None:
     with connection:
         cursor = connection.cursor()
         cursor.execute("""INSERT INTO approvals (expense_id, status)
-                          VALUES (?, "pending")""",(expense_id, ))
+                          VALUES (?, 'pending')""",(expense_id, ))
 
 
 def view_submitted_expenses(connection, user_id:int) -> list:
@@ -61,7 +61,7 @@ def view_submitted_expenses(connection, user_id:int) -> list:
 def get_pending_expenses(connection, user_id:int)-> list:
     with connection:
         cursor = connection.cursor()
-        cursor.execute("""SELECT * FROM expenses
+        cursor.execute("""SELECT expenses.*, approvals.status, approvals.comment FROM expenses
                           INNER JOIN  approvals
                           ON expenses.id = approvals.expense_id
                           WHERE approvals.status = 'pending' AND expenses.user_id = ?""", (user_id,))
@@ -93,14 +93,25 @@ def delete_expense(connection, user_id: int, expense_id: int) ->None:
                                     FROM approvals
                                     WHERE approvals.expense_id = ?)""",
                           (user_id, expense_id, expense_id))
+        return cursor.lastrowid
 
 def view_completed_expenses(connection, user_id:int) -> list:
     with connection:
         cursor = connection.cursor()
-        cursor.execute("""SELECT expenses.* FROM expenses
+        cursor.execute("""SELECT expenses.*, approvals.status, approvals.comment FROM expenses
                           INNER JOIN  approvals
                           ON expenses.id = approvals.expense_id 
                           WHERE approvals.status in ('approved', 'denied') AND user_id = ?""",
                           (user_id, ))
+        result = cursor.fetchall()
+
+        return result
+
+def view_expense(connection, expense_id: int) -> list:
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""SELECT * FROM 
+                          expenses
+                          WHERE expenses.id = ?""", (expense_id,))
         result = cursor.fetchall()
         return result

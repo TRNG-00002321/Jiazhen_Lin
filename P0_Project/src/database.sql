@@ -21,9 +21,9 @@ CREATE TABLE expenses(
 CREATE TABLE approvals(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     expense_id INT NOT NULL,
-    status CHECK(status in ("pending", "approved", "denied")) NOT NULL,
+    status NOT NULL CHECK(status IN ('pending', 'approved', 'denied')),
     reviewer INT,
     comment VARCHAR(255),
     review_date VARCHAR(255),
-    FOREIGN KEY(expense_id) REFERENCES expenses(id) ON DELETE SET NULL
+    FOREIGN KEY(expense_id) REFERENCES expenses(id) ON DELETE CASCADE
 );
