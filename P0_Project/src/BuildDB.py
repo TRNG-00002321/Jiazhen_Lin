@@ -13,3 +13,12 @@ def build_employee_db():
         raise sqlite3.Error(f"Error executing SQL: {e}")
 
     return conn
+
+def connect_employee_db():
+
+    try:
+        conn = sqlite3.connect('employee.db')
+        conn.cursor()
+        return conn
+    except sqlite3.Error as e:
+        raise sqlite3.Error(f"No connection made")

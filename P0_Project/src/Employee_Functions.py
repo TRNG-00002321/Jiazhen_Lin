@@ -34,8 +34,7 @@ def valid_amount(amount: float) -> bool:
     if len(temp) > 1:
         if len(temp[1]) > 2:
             return False
-    return True if amount>0 is not None else False
-
+    return True if amount>0 else False
 
 def add_expense(connection, user_id: int, amount: float, description: str = "",
                 date = datetime.date.today()) -> int:
@@ -80,6 +79,7 @@ def modify_expense(connection, user_id: int, expense_id: int, amount: float, des
     if EmployeeDBFunctions.expense_id_exists(connection, expense_id):
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.modify_expense(connection, user_id, expense_id, amount, description, date)
+
         else:
             raise ValueError("Invalid expense")
     else:
@@ -89,6 +89,7 @@ def delete_expense(connection, user_id: int, expense_id: int) -> None:
     if EmployeeDBFunctions.expense_id_exists(connection, expense_id):
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.delete_expense(connection, user_id, expense_id)
+            EmployeeDBFunctions.delete_pending_approval(connection, expense_id)
         else:
             raise ValueError("Invalid expense")
     else:

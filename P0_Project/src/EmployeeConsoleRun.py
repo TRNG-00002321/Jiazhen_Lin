@@ -1,5 +1,5 @@
 import Employee_Functions
-from BuildDB import build_employee_db
+from P0_Project.src.BuildDB import build_employee_db, connect_employee_db
 
 def start(conn):
     print("1. Create Employee User")
@@ -154,8 +154,10 @@ def actions():
         return -1
 
 def main():
-    conn = build_employee_db()
-    build_example_data(conn)
+    #conn = build_employee_db()
+    #build_example_data(conn)
+
+    conn = connect_employee_db()
 
     user = None
     while user != -1:

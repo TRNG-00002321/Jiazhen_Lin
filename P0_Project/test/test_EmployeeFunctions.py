@@ -199,6 +199,9 @@ class TestEmployeeFunctions(unittest.TestCase):
         expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
         EmployeeFunctions.delete_expense(self.conn, user_id, expense_id)
         expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT * FROM APPROVALS")
+        self.assertEqual(cursor.fetchall(), [])
         self.assertEqual(expense, None)
         self.tearDown()
 

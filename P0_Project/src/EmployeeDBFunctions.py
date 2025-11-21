@@ -49,7 +49,6 @@ def new_pending_approval(connection, expense_id:int) -> None:
         cursor.execute("""INSERT INTO approvals (expense_id, status)
                           VALUES (?, 'pending')""",(expense_id, ))
 
-
 def view_submitted_expenses(connection, user_id:int) -> list:
     with connection:
         cursor = connection.cursor()
@@ -88,12 +87,16 @@ def delete_expense(connection, user_id: int, expense_id: int) ->None:
     with connection:
         cursor = connection.cursor()
         cursor.execute("""DELETE FROM expenses 
-                          WHERE user_id = ? AND id = ?
-                          AND EXISTS(SELECT 1 
-                                    FROM approvals
-                                    WHERE approvals.expense_id = ?)""",
-                          (user_id, expense_id, expense_id))
+                          WHERE user_id = ? AND id = ?""",
+                          (user_id, expense_id))
         return cursor.lastrowid
+
+def delete_pending_approval(connection, expense_id: int) -> None:
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""DELETE FROM approvals 
+                          WHERE expense_id = ?""",
+                          (expense_id,))
 
 def view_completed_expenses(connection, user_id:int) -> list:
     with connection:
