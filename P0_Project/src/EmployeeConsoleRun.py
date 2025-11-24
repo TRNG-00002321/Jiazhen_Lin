@@ -1,4 +1,6 @@
+import pandas as pd
 import Employee_Functions
+
 from P0_Project.src.BuildDB import build_employee_db, connect_employee_db
 
 def start(conn):
@@ -49,7 +51,7 @@ def expense_description(expense: tuple):
         i += 1
     return ex
 
-def parse_expense(args):
+def parse_expense(args: list):
     expenses = {}
     if args is None:
         print("No Expenses Available")
@@ -59,9 +61,10 @@ def parse_expense(args):
         for arg in args:
             expenses[i] = expense_description(arg)
             i += 1
+        print(pd.DataFrame(expenses.values()).to_markdown(index=expenses.keys()))
         return expenses
 
-def add_expenses(conn, user_id):
+def add_expenses(conn, user_id:int ):
     amount = float(input("Enter Amount: "))
     description = input("Enter Description: ")
     date = input("Enter Date: ")
@@ -77,12 +80,9 @@ def add_expenses(conn, user_id):
         print(e)
 
 def view_expenses(conn, user_id):
-    expenses = parse_expense(Employee_Functions.view_submitted_expenses(conn, user_id))
-    if expenses is not None:
-        print("Expenses: ")
-        print(*expenses.values(), sep="\n")
+    parse_expense(Employee_Functions.view_all_expenses(conn, user_id))
 
-def verify_selection(action, expenses):
+def verify_selection(action:str, expenses: dict):
     expense_id = input(f"Please choose an expense to {action}: ")
     try:
         expense_id = int(expense_id)
@@ -95,21 +95,23 @@ def verify_selection(action, expenses):
         print("Please choose a valid expense ID")
         return False
 
-def modify_expenses(conn, user_id):
+def modify_expenses(conn, user_id: int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
     if expenses is not None:
-        print(*expenses.items(), sep="\n")
+        #print(*expenses.items(), sep="\n")
 
         expense_selection = verify_selection("modify", expenses)
         if expense_selection == False:
             modify_expenses(conn, user_id)
         else:
-            amount = float(input("Enter Amount: "))
+            amount = input("Enter Amount: ")
             description = input("Enter Description: ")
             date = input("Enter Date: ")
 
             if amount == "":
                 amount = expenses[expense_selection]["Amount"]
+            else:
+                amount = float(amount)
             if description == "":
                 description = expenses[expense_selection]["Description"]
             if date == "":
@@ -117,10 +119,10 @@ def modify_expenses(conn, user_id):
             expense_id = expenses[expense_selection]["Expense ID"]
             Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, date)
 
-def delete_expenses(conn, user_id):
+def delete_expenses(conn, user_id : int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
     if expenses is not None:
-        print(*expenses.items(), sep="\n")
+        #print(*expenses.items(), sep="\n")
         expense_selection = verify_selection("delete", expenses)
         if expense_selection == False:
             delete_expenses(conn, user_id)
@@ -128,14 +130,12 @@ def delete_expenses(conn, user_id):
             expense_id = expenses[expense_selection]["Expense ID"]
             Employee_Functions.delete_expense(conn, user_id, expense_id)
 
-def view_complete_expenses(conn, user_id):
+def view_complete_expenses(conn, user_id: int):
     expenses = Employee_Functions.view_completed_expenses(conn, user_id)
     if expenses is None:
         print("No Completed Expenses")
     else:
-        print("Expenses: ")
-        expenses = parse_expense(expenses)
-        print(*expenses.values(), sep="\n")
+        parse_expense(expenses)
 
 def actions():
     li = [

@@ -49,9 +49,9 @@ def add_expense(connection, user_id: int, amount: float, description: str = "",
         raise ValueError("Invalid user")
 
 
-def view_submitted_expenses(connection, user_id: int) -> list:
+def view_all_expenses(connection, user_id: int) -> list:
     if EmployeeDBFunctions.user_id_exists(connection, user_id):
-        result = EmployeeDBFunctions.view_submitted_expenses(connection, user_id)
+        result = EmployeeDBFunctions.view_all_expenses(connection, user_id)
         return result if result != [] else None
     else:
         raise ValueError("Invalid user")

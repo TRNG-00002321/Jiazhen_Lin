@@ -49,7 +49,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         [None, None],
         ["", "test"],
         ["name", ""],
-        ["ubvyeoaubveaohasbdvaldsjbvivb", "vladnvlabj"]
+        ["tryAVeryLongAnnoyingUsername", "password"]
     ])
     def test_new_employee_errors(self, username, password):
         self.set_up()
@@ -59,7 +59,7 @@ class TestEmployeeFunctions(unittest.TestCase):
     @parameterized.expand([
         ["admin", "password123"],
         ["jHJB324y!#41", "  mypass"],
-        ["test  user", "!#$!@sdvasfADFSA324  "],
+        ["test  user", "!#$!@randomADFSA324  "],
     ])
     def test_log_in_success(self, username, password):
         self.set_up()
@@ -84,9 +84,9 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.tearDown()
 
     @parameterized.expand([
-        ["dsfa", "dsfas", 30],
-        ["casdv", "Afas", .01],
-        ["adfd", "ASf", 30.63]
+        ["test1", "pass1", 30],
+        ["test2", "pass2", .01],
+        ["test3", "pass3", 30.63]
     ])
     def test_new_expense(self, username, password, expense):
         self.set_up()
@@ -133,7 +133,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         EmployeeFunctions.add_expense(self.conn, user_id, amount)
-        expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)
         self.assertEqual(expense[0][2], amount)
         self.tearDown()
@@ -148,7 +148,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         EmployeeFunctions.add_expense(self.conn, user_id, 200)
         EmployeeFunctions.add_expense(self.conn, user_id, amount)
-        expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)
         self.assertEqual(expense[1][2], amount)
         self.tearDown()
@@ -157,7 +157,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertIsNone(expense)
 
     @parameterized.expand([
@@ -170,7 +170,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
         EmployeeFunctions.modify_expense(self.conn, user_id, expense_id, amount)
-        expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertEqual(expense[0][2], amount)
         self.tearDown()
 
@@ -188,17 +188,14 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.assertRaises(ValueError, EmployeeFunctions.modify_expense, self.conn, user_id, expense_id, 0)
         self.tearDown()
 
-    @parameterized.expand([
-        [30.00],
-        [30.15]
-    ])
-    def test_delete_expense(self, amount):
+
+    def test_delete_expense(self):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
         EmployeeFunctions.delete_expense(self.conn, user_id, expense_id)
-        expense = EmployeeFunctions.view_submitted_expenses(self.conn, user_id)
+        expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         cursor = self.conn.cursor()
         cursor.execute("SELECT * FROM APPROVALS")
         self.assertEqual(cursor.fetchall(), [])

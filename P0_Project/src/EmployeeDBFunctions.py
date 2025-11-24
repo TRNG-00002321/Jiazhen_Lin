@@ -49,7 +49,7 @@ def new_pending_approval(connection, expense_id:int) -> None:
         cursor.execute("""INSERT INTO approvals (expense_id, status)
                           VALUES (?, 'pending')""",(expense_id, ))
 
-def view_submitted_expenses(connection, user_id:int) -> list:
+def view_all_expenses(connection, user_id:int) -> list:
     with connection:
         cursor = connection.cursor()
         cursor.execute("""SELECT * FROM expenses
