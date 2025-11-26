@@ -27,14 +27,15 @@ def add_user(connection, username:str, encoded_password:str) -> None:
                       VALUES (%s, %s, 'employee')""",
                       (username, encoded_password))
 
-def log_in(connection, username:str, encoded_password:str) -> list:
-    
-        cursor = connection.cursor()
-        cursor.execute("""SELECT id FROM users
-                          WHERE username = %s AND password = %s""",
-                          (username, encoded_password))
-        result = cursor.fetchone()
-        return result
+
+def log_in(connection, username: str) -> list:
+    cursor = connection.cursor()
+    cursor.execute("""SELECT id, password
+                      FROM users
+                      WHERE username = %s""",
+                   (username,))
+    result = cursor.fetchone()
+    return result
 
 def add_expense(connection, user_id:int, amount:float, description:str, date) -> int:
     

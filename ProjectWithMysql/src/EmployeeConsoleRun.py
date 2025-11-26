@@ -154,8 +154,8 @@ def actions():
         return -1
 
 def main():
-    # conn = build_employee_db()
-    # build_example_data(conn)
+    #conn = build_employee_db()
+    #build_example_data(conn)
 
     conn = connect_employee_db()
 
