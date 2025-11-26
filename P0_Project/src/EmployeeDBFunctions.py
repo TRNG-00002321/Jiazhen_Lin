@@ -1,5 +1,4 @@
-def username_exists(connection, username:str ) -> bool:
-    
+def username_exists(connection, username: str) -> bool:
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users WHERE username = ?""",(username,))
     if cursor.fetchone() is not None: return True
@@ -26,12 +25,12 @@ def add_user(connection, username:str, encoded_password:str) -> None:
                       VALUES (?, ?, 'employee')""",
                       (username, encoded_password))
 
-def log_in(connection, username:str, encoded_password:str) -> list:
+def log_in(connection, username:str) -> list:
     
     cursor = connection.cursor()
-    cursor.execute("""SELECT id FROM users
-                      WHERE username = ? AND password = ?""",
-                      (username, encoded_password))
+    cursor.execute("""SELECT id, password FROM users
+                      WHERE username = ?""",
+                      (username,))
     result = cursor.fetchone()
     return result
 

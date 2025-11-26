@@ -1,5 +1,6 @@
 import datetime
-import hashlib
+import bcrypt
+
 try:
     import EmployeeDBFunctions
 except ImportError:
@@ -14,19 +15,20 @@ def add_user(connection, username: str, password: str) -> None:
     if EmployeeDBFunctions.username_exists(connection, username):
         raise ValueError("Username already exists")
 
-    encoded_password = hashlib.sha256(username.encode() + password.encode()).hexdigest()
+    encoded_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
     EmployeeDBFunctions.add_user(connection, username, encoded_password)
+    connection.commit()
 
 
 def log_in(connection, username:str, password:str) -> int:
     if not(username and password):
         raise ValueError("username and password cannot be empty")
-    encoded_password = hashlib.sha256(username.encode() + password.encode()).hexdigest()
-    result = EmployeeDBFunctions.log_in(connection, username, encoded_password)
-    if result is None:
+
+    user_id, password_hash = EmployeeDBFunctions.log_in(connection, username)
+    if user_id is None or not bcrypt.checkpw(password.encode(), password_hash.encode()):
         raise ValueError("username and/or password is invalid")
-    return result[0]
+    return user_id
 
 
 def valid_amount(amount: float) -> bool:
@@ -44,6 +46,7 @@ def add_expense(connection, user_id: int, amount: float, description: str = "",
     if EmployeeDBFunctions.user_id_exists(connection, user_id):
         expense_id = EmployeeDBFunctions.add_expense(connection, user_id, amount, description, date)
         EmployeeDBFunctions.new_pending_approval(connection, expense_id)
+        connection.commit()
         return expense_id
     else:
         raise ValueError("Invalid user")
@@ -79,7 +82,7 @@ def modify_expense(connection, user_id: int, expense_id: int, amount: float, des
     if EmployeeDBFunctions.expense_id_exists(connection, expense_id):
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.modify_expense(connection, user_id, expense_id, amount, description, date)
-
+            connection.commit()
         else:
             raise ValueError("Invalid expense")
     else:
@@ -90,6 +93,7 @@ def delete_expense(connection, user_id: int, expense_id: int) -> None:
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.delete_expense(connection, user_id, expense_id)
             EmployeeDBFunctions.delete_pending_approval(connection, expense_id)
+            connection.commit()
         else:
             raise ValueError("Invalid expense")
     else:
