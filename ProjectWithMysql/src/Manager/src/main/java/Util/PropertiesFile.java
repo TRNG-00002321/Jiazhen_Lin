@@ -11,8 +11,8 @@ public class PropertiesFile {
             prop.setProperty("url", "jdbc:mysql://localhost:3306/employee");
             prop.setProperty("user", "root");
             prop.setProperty("password", "password");
-            prop.store(new FileOutputStream("ManagerDB.properties"), "Added 11/25/2025");
-            prop.load(new FileInputStream("ManagerDB.properties"));
+            prop.store(new FileOutputStream("src/main/resources/ManagerDB.properties"), "Added 11/28/2025");
+            prop.load(new FileInputStream("src/main/resources/ManagerDB.properties"));
             return prop;
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -23,7 +23,7 @@ public class PropertiesFile {
     public static Properties loadManagerDBProperties() {
         Properties prop = new Properties();
         try {
-            prop.load(new FileInputStream("ManagerDB.properties"));
+            prop.load(new FileInputStream("src/main/resources/ManagerDB.properties"));
             return prop;
         } catch (IOException e) {
             System.out.println(e.getMessage());

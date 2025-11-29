@@ -19,7 +19,7 @@ public class ManagerDBFunctions{
         while(rs.next()){
             Expense expense = new Expense(rs.getInt("id"),
                     rs.getInt("user_id"), rs.getDouble("amount"),
-                    rs.getString("description"), rs.getDate("date"));
+                    rs.getString("description"), rs.getString("category"), rs.getDate("date"));
             expenses.add(expense);
         }
         return expenses;
@@ -131,7 +131,7 @@ public class ManagerDBFunctions{
     }
 
     public List<String> getCategories(){
-        String query = "SELECT DISTINCT description FROM expenses";
+        String query = "SELECT DISTINCT category FROM expenses";
         try{
             PreparedStatement ps = conn.prepareStatement(query);
             List<String> cat =  new ArrayList<>();
@@ -183,7 +183,7 @@ public class ManagerDBFunctions{
     }
 
     public List<Expense> generateReportByCategory(String category){
-        String query = "SELECT * FROM expenses WHERE description = ?";
+        String query = "SELECT * FROM expenses WHERE category = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, category);

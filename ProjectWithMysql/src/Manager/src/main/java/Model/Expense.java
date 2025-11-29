@@ -6,13 +6,15 @@ public class Expense {
     private int expenseId;
     private int userId;
     private double amount;
+    private String description;
     private String category;
     private Date date;
 
-    public Expense(int expenseId, int userId, double amount, String category, Date date){
+    public Expense(int expenseId, int userId, double amount, String description, String category, Date date){
         this.expenseId = expenseId;
         this.userId = userId;
         this.amount = amount;
+        this.description = description;
         this.category = category;
         this.date = date;
     }
@@ -28,6 +30,7 @@ public class Expense {
                 '}';
     }
 
+    public String getDescription() {return description;}
     public int getExpenseId() {
         return expenseId;
     }

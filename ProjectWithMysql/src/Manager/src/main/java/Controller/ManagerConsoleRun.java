@@ -1,8 +1,5 @@
 package Controller;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.sql.Connection;
 
 import DAO.ManagerDBFunctions;
@@ -41,7 +38,7 @@ public class ManagerConsoleRun {
                 }
 
             case "2":
-                System.out.println("Manage login:");
+                System.out.println("Manager login:");
                 System.out.println("Enter username:");
                 username = sc.nextLine();
                 System.out.println("Enter password:");
@@ -76,39 +73,51 @@ public class ManagerConsoleRun {
     }
 
     void showExpenses(List<Expense> expenses){
-        System.out.println("Expenses:");
-        System.out.printf("%6s | %5s | %5s | %12s | %10s | %-10s%n", "Option", "ID", "User", "Amount", "Category", "Date");
-        String dashes = String.format("%60s", "").replace(' ', '-');
-        System.out.printf("%s%n", dashes);
-        int i=1;
-        for (Expense e : expenses) {
-            System.out.printf("%6s | %5s | %5s | %,12.2f | %10s | %10s%n",
-                    i,
-                    e.getExpenseId(),
-                    e.getUserId(),
-                    e.getAmount(),
-                    e.getCategory(),
-                    e.getDate()
-            );
-            i++;
+        if (expenses.isEmpty()){
+            System.out.println("No expenses found");
+        }
+        else {
+            System.out.println("Expenses:");
+            System.out.printf("%6s | %5s | %5s | %12s | %25s | %25s | %10s%n",
+                    "Option", "ID", "User", "Amount", "Description", "Category", "Date");
+            String dashes = String.format("%110s", "").replace(' ', '-');
+            System.out.printf("%s%n", dashes);
+            int i = 1;
+            for (Expense e : expenses) {
+                System.out.printf("%6s | %5s | %5s | %,12.2f | %25s | %25s | %10s%n",
+                        i,
+                        e.getExpenseId(),
+                        e.getUserId(),
+                        e.getAmount(),
+                        e.getDescription(),
+                        e.getCategory(),
+                        e.getDate()
+                );
+                i++;
+            }
         }
     }
 
     void showApprovals(List<Approval> approvals){
-        System.out.println("Approvals:");
-        System.out.printf("%6s | %12s | %10s | %10s | %-10s%n", "Option", "Amount", "Comment", "Date", "Reviewer");
-        String dashes = String.format("%60s", "").replace(' ', '-');
-        System.out.printf("%s%n", dashes);
-        int i=1;
-        for (Approval a : approvals) {
-            System.out.printf("%6s | %,12.2f | %10s | %10s | %10s%n",
-                    i,
-                    a.getExpenseAmount(),
-                    a.getComment(),
-                    a.getDate(),
-                    a.getUserId()
-            );
-            i++;
+        if(approvals.isEmpty()){
+            System.out.println("No approvals found");
+        }
+        else {
+            System.out.println("Approvals:");
+            System.out.printf("%6s | %12s | %10s | %10s | %-10s%n", "Option", "Amount", "Comment", "Date", "Reviewer");
+            String dashes = String.format("%60s", "").replace(' ', '-');
+            System.out.printf("%s%n", dashes);
+            int i = 1;
+            for (Approval a : approvals) {
+                System.out.printf("%6s | %,12.2f | %10s | %10s | %10s%n",
+                        i,
+                        a.getExpenseAmount(),
+                        a.getComment(),
+                        a.getDate(),
+                        a.getUserId()
+                );
+                i++;
+            }
         }
     }
 
@@ -157,20 +166,82 @@ public class ManagerConsoleRun {
         System.out.println("Please select an expense to add comment on");
         try{
             int option = sc.nextInt();
+            if(option > approvals.size()){
+                throw new IllegalArgumentException("Please choose an listed option number");
+            }
             sc.nextLine(); //read the \n away
             int id = approvals.get(option-1).getExpenseId();
             System.out.println("Comment");
             String comment = sc.nextLine();
+            if(comment.isEmpty()){
+                throw new IllegalArgumentException("Comment cannot be empty");
+            }
             mf.addComment(id, comment);
         }
         catch(InputMismatchException e) {
             System.out.println("Please enter a number");
             sc.nextLine();
             addComment();
-        } catch (Exception e) {
-            System.out.println("Please add a comment");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            addComment();
         }
 
+    }
+
+    void generateByCategory(){
+        System.out.println("Please enter a number from the following:");
+        List<String> categories =  mf.getCategories();
+        for(int i=1; i<categories.size()+1; i++){
+            System.out.println(i + ". " +  categories.get(i-1));
+        }
+        try {
+            int cat = sc.nextInt();
+            if (cat - 1 > categories.size() || cat < 0) {
+                System.out.println("Invalid category. Please try again.");
+                generateByCategory();
+            } else {
+                String category = categories.get(cat - 1);
+                showExpenses(mf.generateReportByCategory(category));
+            }
+        }
+        catch(InputMismatchException e) {
+            System.out.println("Please enter a number");
+            sc.nextLine();
+            generateByCategory();
+        }
+    }
+
+    void generateByUser(){
+        System.out.println("Please enter an employee from the following:");
+        List<Integer> employees = mf.getEmployees();
+        for(int id: employees){
+            System.out.println(id);
+        }
+        try {
+            int employee = sc.nextInt();
+            if (employee > employees.size()) {
+                System.out.println("Please choose an listed option number");
+                generateByUser();
+            } else {
+                showExpenses(mf.generateReportForEmployee(employee));
+            }
+        } catch(InputMismatchException e) {
+            System.out.println("Please enter a number");
+            sc.nextLine();
+            generateByUser();
+        }
+    }
+
+    void generateByDate(){
+        System.out.println("Please enter the date in yyyy-mm-dd:");
+        String date = sc.nextLine();
+        try {
+            showExpenses(mf.generateReportByDate(date));
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            generateByDate();
+        }
     }
 
     void generateReports(){
@@ -182,30 +253,14 @@ public class ManagerConsoleRun {
             int option = sc.nextInt();
             sc.nextLine(); // skip \n
             switch(option){
-                case 1:
-                System.out.println("Please enter a category from the following:");
-                for(String cat: mf.getCategories()){
-                    System.out.println(cat);
-                }
-                String category = sc.nextLine();
-                showExpenses(mf.generateReportByCategory(category)); break;
-                case 2:
-
-                System.out.println("Please enter the date:");
-                String date = sc.nextLine();
-                showExpenses(mf.generateReportByDate(date)); break;
-                case 3:
-                System.out.println("Please enter an employee from the following:");
-                for(int id: mf.getEmployees()){
-                    System.out.println(id);
-                }
-                int employee = sc.nextInt();
-                showExpenses(mf.generateReportForEmployee(employee)); break;
+                case 1: generateByCategory(); break;
+                case 2: generateByDate(); break;
+                case 3: generateByUser(); break;
                 default:
+                    throw new IllegalArgumentException("Please enter a valid option");
             }
-        }catch(Exception e){
-            System.out.println("Please enter a valid option");
-            sc.nextLine();
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
             generateReports();
         }
     }
@@ -247,7 +302,7 @@ public class ManagerConsoleRun {
                         sc.nextLine();
                         break;
                     default:
-                        System.out.println("Invalid option. Please try again");
+                        System.out.println("Invalid option. Please try again.");
                         sc.nextLine();
                         break;
                 }

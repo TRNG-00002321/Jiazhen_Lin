@@ -1,10 +1,9 @@
 package Service;
 
 import Model.Approval;
-import org.mindrot.jbcrypt.BCrypt; //dependency in pom file
-
-import DAO.ManagerDBFunctions;
 import Model.Expense;
+import DAO.ManagerDBFunctions;
+import org.mindrot.jbcrypt.BCrypt;  //dependency in pom file
 import java.sql.Date;
 import java.util.List;
 
@@ -53,7 +52,13 @@ public class ManagerFunctions {
     }
 
     public List<Expense> generateReportByDate(String date){
-        return managerDBFunctions.generateReportByDate(Date.valueOf(date));
+        try{
+            Date date1 = Date.valueOf(date);
+            return managerDBFunctions.generateReportByDate(date1);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Not a date or Incorrect format");
+        }
+
     }
 
     public List<String> getCategories(){
