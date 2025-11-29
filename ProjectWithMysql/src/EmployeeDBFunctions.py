@@ -1,5 +1,4 @@
-def username_exists(connection, username:str ) -> bool:
-    
+def username_exists(connection, username: str) -> bool:
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users WHERE username = %s""",(username,))
     if cursor.fetchone() is not None: return True
@@ -37,12 +36,12 @@ def log_in(connection, username: str) -> list:
     result = cursor.fetchone()
     return result
 
-def add_expense(connection, user_id:int, amount:float, description:str, date) -> int:
+def add_expense(connection, user_id:int, amount:float, description:str, category, date) -> int:
     
         cursor = connection.cursor()
-        cursor.execute("""INSERT INTO expenses (user_id, amount, description, date)
-                          VALUES (%s, %s, %s, %s)""",
-                          (user_id, amount, description, date))
+        cursor.execute("""INSERT INTO expenses (user_id, amount, description, category, date)
+                          VALUES (%s, %s, %s, %s, %s)""",
+                          (user_id, amount, description, category, date))
         return cursor.lastrowid
 
 def new_pending_approval(connection, expense_id:int) -> None:
@@ -70,12 +69,13 @@ def get_pending_expenses(connection, user_id:int)-> list:
         return result
 
 def modify_expense(connection, user_id:int, expense_id:int, amount: float, description: str,
-                   date) -> None:
+                   category, date) -> None:
     
         cursor = connection.cursor()
         cursor.execute("""UPDATE expenses
                           SET amount      = %s,
                               description = %s,
+                              category    = %s,
                               date        = %s
                           WHERE expenses.id = %s
                             AND expenses.user_id = %s
@@ -83,7 +83,7 @@ def modify_expense(connection, user_id:int, expense_id:int, amount: float, descr
                                         FROM approvals
                                         WHERE approvals.expense_id = %s
                                           AND approvals.status = 'pending')""",
-                          (amount, description, date, expense_id, user_id, expense_id))
+                          (amount, description, category, date, expense_id, user_id, expense_id))
 
 def delete_expense(connection, user_id: int, expense_id: int) ->None:
     

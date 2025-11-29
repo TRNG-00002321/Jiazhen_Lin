@@ -118,7 +118,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, username, password)
         user_id = EmployeeFunctions.log_in(self.conn, username, password)
-        EmployeeFunctions.add_expense(self.conn,user_id, expense)
+        EmployeeFunctions.add_expense(self.conn,user_id, expense, "TEST", "TEST")
         cursor = self.conn.cursor()
         cursor.execute("SELECT * FROM expenses")
         result = cursor.fetchone()
@@ -129,14 +129,14 @@ class TestEmployeeFunctions(unittest.TestCase):
 
     def test_new_expense_no_user(self):
         self.set_up()
-        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, 0, 30.0)
+        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, 0, 30.0, "no user", "TEST")
         self.tearDown()
 
     def test_new_expense_no_expense(self):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, 0)
+        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, 0, "TEST", "TEST")
         self.tearDown()
 
     @parameterized.expand([
@@ -147,7 +147,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, amount)
+        self.assertRaises(ValueError, EmployeeFunctions.add_expense, self.conn, user_id, amount, "TEST", "Test")
         self.tearDown()
 
     @parameterized.expand([
@@ -158,7 +158,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        EmployeeFunctions.add_expense(self.conn, user_id, amount)
+        EmployeeFunctions.add_expense(self.conn, user_id, amount, "test", "test")
         expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)
         self.assertEqual(expense[0][2], amount)
@@ -172,8 +172,8 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        EmployeeFunctions.add_expense(self.conn, user_id, 200)
-        EmployeeFunctions.add_expense(self.conn, user_id, amount)
+        EmployeeFunctions.add_expense(self.conn, user_id, 200, "test", "test")
+        EmployeeFunctions.add_expense(self.conn, user_id, amount, "test", "test")
         expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)
         self.assertEqual(expense[1][2], amount)
@@ -194,8 +194,8 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
-        EmployeeFunctions.modify_expense(self.conn, user_id, expense_id, amount)
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200, "test", "test")
+        EmployeeFunctions.modify_expense(self.conn, user_id, expense_id, amount, "test", "test")
         expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         self.assertEqual(expense[0][2], amount)
         self.tearDown()
@@ -205,13 +205,13 @@ class TestEmployeeFunctions(unittest.TestCase):
 
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        self.assertRaises(ValueError, EmployeeFunctions.modify_expense, self.conn, user_id, 0, 0)
+        self.assertRaises(ValueError, EmployeeFunctions.modify_expense, self.conn, user_id, 0, 0, "test", "test")
 
-        EmployeeFunctions.add_expense(self.conn, user_id, 100)
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
+        EmployeeFunctions.add_expense(self.conn, user_id, 100, "test", "test")
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200, "test", "test")
         cursor = self.conn.cursor()
         cursor.execute("UPDATE approvals SET status = 'approved' WHERE expense_id = %s", (expense_id,))
-        self.assertRaises(ValueError, EmployeeFunctions.modify_expense, self.conn, user_id, expense_id, 0)
+        self.assertRaises(ValueError, EmployeeFunctions.modify_expense, self.conn, user_id, expense_id, 0, "test", "test")
         self.tearDown()
 
 
@@ -219,7 +219,7 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200, "TEST", "Tests")
         EmployeeFunctions.delete_expense(self.conn, user_id, expense_id)
         expense = EmployeeFunctions.view_all_expenses(self.conn, user_id)
         cursor = self.conn.cursor()
@@ -235,8 +235,8 @@ class TestEmployeeFunctions(unittest.TestCase):
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
         self.assertRaises(ValueError, EmployeeFunctions.delete_expense, self.conn, user_id, 0)
 
-        EmployeeFunctions.add_expense(self.conn, user_id, 100)
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
+        EmployeeFunctions.add_expense(self.conn, user_id, 100, "test", "test")
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200, "test", "test")
         cursor = self.conn.cursor()
         cursor.execute("UPDATE approvals SET status = 'approved' WHERE expense_id = %s", (expense_id,))
         self.assertRaises(ValueError, EmployeeFunctions.delete_expense, self.conn, user_id, expense_id)
@@ -246,10 +246,10 @@ class TestEmployeeFunctions(unittest.TestCase):
         self.set_up()
         EmployeeFunctions.add_user(self.conn, "admin", "password")
         user_id = EmployeeFunctions.log_in(self.conn, "admin", "password")
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200)
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 200, "test", "test")
         cursor = self.conn.cursor()
         cursor.execute("UPDATE approvals SET status = 'approved' WHERE expense_id = %s", (expense_id,))
-        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 100)
+        expense_id = EmployeeFunctions.add_expense(self.conn, user_id, 100, "test", "test")
         cursor.execute("UPDATE approvals SET status = 'denied' WHERE expense_id = %s", (expense_id,))
         expense = EmployeeFunctions.view_completed_expenses(self.conn, user_id)
         self.assertIsNotNone(expense)

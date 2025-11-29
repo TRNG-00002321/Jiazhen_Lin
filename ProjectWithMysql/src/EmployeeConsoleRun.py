@@ -1,5 +1,6 @@
 import pandas as pd
 import Employee_Functions
+from ExpenseCategories import Category
 
 from ProjectWithMysql.src.BuildDB import build_employee_db, connect_employee_db
 
@@ -35,15 +36,15 @@ def build_example_data(conn):
     Employee_Functions.add_user(conn, "user1", "password1")
     Employee_Functions.add_user(conn, "user2", "password2")
 
-    Employee_Functions.add_expense(conn, 1, 500)
-    Employee_Functions.add_expense(conn, 1, 1000)
-    Employee_Functions.add_expense(conn, 1, 1500)
+    Employee_Functions.add_expense(conn, 1, 500, "consultant", Category(6).name)
+    Employee_Functions.add_expense(conn, 1, 1000, "3 day stay", Category(2).name)
+    Employee_Functions.add_expense(conn, 1, 1500, "lunch", Category(3).name)
 
-    Employee_Functions.add_expense(conn, 2, 1000)
-    Employee_Functions.add_expense(conn, 3, 1500)
+    Employee_Functions.add_expense(conn, 2, 1000, "glitchy comma key", Category(1).name)
+    Employee_Functions.add_expense(conn, 3, 1500, "round trip", Category(2).name)
 
 def expense_description(expense: tuple):
-    description = ["Expense ID", "Amount", "Description", "Date", "Status", "Comment"]
+    description = ["Expense ID", "Amount", "Description", "Category", "Date", "Status", "Comment"]
     ex = {"Expense ID": expense[0]}
     i = 2
     while i < len(expense):
@@ -64,16 +65,29 @@ def parse_expense(args: list):
         print(pd.DataFrame(expenses.values()).to_markdown(index=expenses.keys()))
         return expenses
 
+def selectCategory():
+    print("Select Category")
+    for name, mem in Category.__members__.items():
+        print(f"{mem.value}. {name}")
+    cat = input("Enter Category Number: ")
+    try:
+        return Category(int(cat)).name if cat != "" else ""
+    except ValueError:
+        print("Please choose a valid category number")
+        selectCategory()
+
 def add_expenses(conn, user_id:int ):
     amount = float(input("Enter Amount: "))
     description = input("Enter Description: ")
+    category = selectCategory()
     date = input("Enter Date: ")
+    if category == "":
+        category = Category.Other
     try:
-
         if date == "":
-            result = Employee_Functions.add_expense(conn, user_id, amount, description)
+            result = Employee_Functions.add_expense(conn, user_id, amount, description, category)
         else:
-            result = Employee_Functions.add_expense(conn, user_id, amount, description, date)
+            result = Employee_Functions.add_expense(conn, user_id, amount, description, category, date)
         print("New Expense: ")
         parse_expense(Employee_Functions.view_expense(conn, result))
     except Exception as e:
@@ -98,14 +112,13 @@ def verify_selection(action:str, expenses: dict):
 def modify_expenses(conn, user_id: int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
     if expenses is not None:
-        #print(*expenses.items(), sep="\n")
-
         expense_selection = verify_selection("modify", expenses)
         if expense_selection == False:
             modify_expenses(conn, user_id)
         else:
             amount = input("Enter Amount: ")
             description = input("Enter Description: ")
+            category = selectCategory()
             date = input("Enter Date: ")
 
             if amount == "":
@@ -114,10 +127,13 @@ def modify_expenses(conn, user_id: int):
                 amount = float(amount)
             if description == "":
                 description = expenses[expense_selection]["Description"]
+            if category == "":
+                category = expenses[expense_selection]["Category"]
             if date == "":
                 date = expenses[expense_selection]["Date"]
+
             expense_id = expenses[expense_selection]["Expense ID"]
-            Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, date)
+            Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
 
 def delete_expenses(conn, user_id : int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
@@ -154,9 +170,6 @@ def actions():
         return -1
 
 def main():
-    #conn = build_employee_db()
-    #build_example_data(conn)
-
     conn = connect_employee_db()
 
     user = None

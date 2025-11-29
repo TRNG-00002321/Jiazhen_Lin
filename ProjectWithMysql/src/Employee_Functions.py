@@ -18,7 +18,6 @@ def add_user(connection, username: str, password: str) -> None:
 
     EmployeeDBFunctions.add_user(connection, username, encoded_password)
 
-
 def log_in(connection, username:str, password:str) -> int:
     if not(username and password):
         raise ValueError("username and password cannot be empty")
@@ -28,7 +27,6 @@ def log_in(connection, username:str, password:str) -> int:
         raise ValueError("username and/or password is invalid")
     return user_id
 
-
 def valid_amount(amount: float) -> bool:
     temp = str(amount).split(".")
     if len(temp) > 1:
@@ -36,18 +34,21 @@ def valid_amount(amount: float) -> bool:
             return False
     return True if amount>0 else False
 
-def add_expense(connection, user_id: int, amount: float, description: str = "",
-                date = datetime.date.today()) -> int:
+def add_expense(connection, user_id: int, amount: float, description,
+                category, date = datetime.date.today()) -> int:
     if not valid_amount(amount):
         raise ValueError("Must provide valid amount")
+    if not description:
+        raise ValueError("Must provide description")
+    if not category:
+        raise ValueError("Must provide category")
 
     if EmployeeDBFunctions.user_id_exists(connection, user_id):
-        expense_id = EmployeeDBFunctions.add_expense(connection, user_id, amount, description, date)
+        expense_id = EmployeeDBFunctions.add_expense(connection, user_id, amount, description, category, date)
         EmployeeDBFunctions.new_pending_approval(connection, expense_id)
         return expense_id
     else:
         raise ValueError("Invalid user")
-
 
 def view_all_expenses(connection, user_id: int) -> list:
     if EmployeeDBFunctions.user_id_exists(connection, user_id):
@@ -74,11 +75,11 @@ def is_pending_approval(connection, user_id: int, expense_id: int) -> bool:
             return False
     return True
 
-def modify_expense(connection, user_id: int, expense_id: int, amount: float, description: str="",
+def modify_expense(connection, user_id: int, expense_id: int, amount: float, description:str, category,
                    date=datetime.date.today()) -> None:
     if EmployeeDBFunctions.expense_id_exists(connection, expense_id):
         if is_pending_approval(connection, user_id, expense_id):
-            EmployeeDBFunctions.modify_expense(connection, user_id, expense_id, amount, description, date)
+            EmployeeDBFunctions.modify_expense(connection, user_id, expense_id, amount, description, category, date)
 
         else:
             raise ValueError("Invalid expense")

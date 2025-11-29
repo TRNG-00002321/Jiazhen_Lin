@@ -16,6 +16,7 @@ CREATE TABLE expenses(
     user_id INT,
     amount REAL NOT NULL,
     description VARCHAR(225),
+    category VARCHAR(225),
     date varchar(255) NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE SET NULL
 );
