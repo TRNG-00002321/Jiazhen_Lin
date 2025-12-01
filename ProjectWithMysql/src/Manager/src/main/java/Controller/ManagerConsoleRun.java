@@ -129,25 +129,25 @@ public class ManagerConsoleRun {
     void approvePendingExpenses(boolean approve, int userId){
         List<Expense> expenses = mf.viewPendingExpenses();
         showExpenses(expenses);
-        if(approve) {
+        if(approve && !expenses.isEmpty()) {
             System.out.println("Please enter the option you would like to approve:");
         }
-        else {
+        else if(!approve && !expenses.isEmpty()) {
             System.out.println("Please enter the option you would like to deny:");
         }
         try {
-            int option = sc.nextInt();
-            sc.nextLine(); // really need a buffer else loop
-            if(option > expenses.size()){
-                System.out.println("Invalid option. Please try again.");
-            }
-            else{
-                int id = expenses.get(option-1).getExpenseId();
-                if (approve){
-                    mf.approveExpenses(id, userId);
-                }
-                else{
-                    mf.denyExpenses(id, userId);
+            if(!expenses.isEmpty()) {
+                int option = sc.nextInt();
+                sc.nextLine(); // really need a buffer else loop
+                if (option > expenses.size()) {
+                    System.out.println("Invalid option. Please try again.");
+                } else {
+                    int id = expenses.get(option - 1).getExpenseId();
+                    if (approve) {
+                        mf.approveExpenses(id, userId);
+                    } else {
+                        mf.denyExpenses(id, userId);
+                    }
                 }
             }
         }
