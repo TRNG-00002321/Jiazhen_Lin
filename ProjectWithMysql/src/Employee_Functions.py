@@ -22,10 +22,10 @@ def log_in(connection, username:str, password:str) -> int:
     if not(username and password):
         raise ValueError("username and password cannot be empty")
 
-    user_id, password_hash = EmployeeDBFunctions.log_in(connection, username)
-    if user_id is None or not bcrypt.checkpw(password.encode(), password_hash.encode()):
+    user = EmployeeDBFunctions.log_in(connection, username)
+    if user is None or not bcrypt.checkpw(password.encode(), user[1].encode()):
         raise ValueError("username and/or password is invalid")
-    return user_id
+    return user[0]
 
 def valid_amount(amount: float) -> bool:
     temp = str(amount).split(".")
