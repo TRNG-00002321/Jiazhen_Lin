@@ -1,9 +1,14 @@
 import datetime
 import bcrypt
+import logging
+
 try:
     import EmployeeDBFunctions
 except ImportError:
     from . import EmployeeDBFunctions
+
+logging.basicConfig(level=logging.INFO, filename="EmployeeDatabase.log", filemode="a",
+                    format="%(asctime)s - %(levelname)s - %(message)s")
 
 def add_user(connection, username: str, password: str) -> None:
     if not username or not password:
@@ -17,6 +22,7 @@ def add_user(connection, username: str, password: str) -> None:
     encoded_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
     EmployeeDBFunctions.add_user(connection, username, encoded_password)
+    logging.info(f"New user added: {username}")
 
 def log_in(connection, username:str, password:str) -> int:
     if not(username and password):
@@ -46,6 +52,7 @@ def add_expense(connection, user_id: int, amount: float, description,
     if EmployeeDBFunctions.user_id_exists(connection, user_id):
         expense_id = EmployeeDBFunctions.add_expense(connection, user_id, amount, description, category, date)
         EmployeeDBFunctions.new_pending_approval(connection, expense_id)
+        logging.info(f"{user_id} add new expense added with ID {expense_id} and Amount {amount}")
         return expense_id
     else:
         raise ValueError("Invalid user")
@@ -80,7 +87,7 @@ def modify_expense(connection, user_id: int, expense_id: int, amount: float, des
     if EmployeeDBFunctions.expense_id_exists(connection, expense_id):
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.modify_expense(connection, user_id, expense_id, amount, description, category, date)
-
+            logging.info(f"{user_id} modified expense ID {expense_id}")
         else:
             raise ValueError("Invalid expense")
     else:
@@ -91,6 +98,7 @@ def delete_expense(connection, user_id: int, expense_id: int) -> None:
         if is_pending_approval(connection, user_id, expense_id):
             EmployeeDBFunctions.delete_expense(connection, user_id, expense_id)
             EmployeeDBFunctions.delete_pending_approval(connection, expense_id)
+            logging.info(f"{user_id} deleted expense ID {expense_id}")
         else:
             raise ValueError("Invalid expense")
     else:

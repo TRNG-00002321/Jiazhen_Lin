@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-import Employee_Functions
+import EmployeeFunctions
 from ExpenseCategories import Category
 from ProjectWithMysql.src.CustomExceptions import MainPageException
 from ProjectWithMysql.src.BuildDB import build_employee_db, connect_employee_db
@@ -16,13 +16,13 @@ def start(conn):
                 print("Create Employee User: ")
                 username = input("Enter Username: ")
                 password = input("Enter password: ")
-                Employee_Functions.add_user(conn, username, password)
-                return Employee_Functions.log_in(conn, username, password)
+                EmployeeFunctions.add_user(conn, username, password)
+                return EmployeeFunctions.log_in(conn, username, password)
             case '2':
                 print("Employee Login: ")
                 username = input("Enter Username: ")
                 password = input("Enter Password: ")
-                return Employee_Functions.log_in(conn, username, password)
+                return EmployeeFunctions.log_in(conn, username, password)
             case '3':
                 return -1
             case _:
@@ -33,16 +33,16 @@ def start(conn):
     return start(conn)
 
 def build_example_data(conn):
-    Employee_Functions.add_user(conn, "admin", "password")
-    Employee_Functions.add_user(conn, "user1", "password1")
-    Employee_Functions.add_user(conn, "user2", "password2")
+    EmployeeFunctions.add_user(conn, "admin", "password")
+    EmployeeFunctions.add_user(conn, "user1", "password1")
+    EmployeeFunctions.add_user(conn, "user2", "password2")
 
-    Employee_Functions.add_expense(conn, 1, 500, "consultant", Category(6).name)
-    Employee_Functions.add_expense(conn, 1, 1000, "3 day stay", Category(2).name)
-    Employee_Functions.add_expense(conn, 1, 1500, "lunch", Category(3).name)
+    EmployeeFunctions.add_expense(conn, 1, 500, "consultant", Category(6).name)
+    EmployeeFunctions.add_expense(conn, 1, 1000, "3 day stay", Category(2).name)
+    EmployeeFunctions.add_expense(conn, 1, 1500, "lunch", Category(3).name)
 
-    Employee_Functions.add_expense(conn, 2, 1000, "glitchy comma key", Category(1).name)
-    Employee_Functions.add_expense(conn, 3, 1500, "round trip", Category(2).name)
+    EmployeeFunctions.add_expense(conn, 2, 1000, "glitchy comma key", Category(1).name)
+    EmployeeFunctions.add_expense(conn, 3, 1500, "round trip", Category(2).name)
 
 def expense_description(expense: tuple):
     description = ["Expense ID", "Amount", "Description", "Category", "Date", "Status", "Comment"]
@@ -166,11 +166,11 @@ def add_expenses(conn, user_id:int ):
                 category = Category.Other.name
             try:
                 if date is None:
-                    result = Employee_Functions.add_expense(conn, user_id, amount, description, category)
+                    result = EmployeeFunctions.add_expense(conn, user_id, amount, description, category)
                 else:
-                    result = Employee_Functions.add_expense(conn, user_id, amount, description, category, date)
+                    result = EmployeeFunctions.add_expense(conn, user_id, amount, description, category, date)
                 print("New Expense: ")
-                parse_expense(Employee_Functions.view_expense(conn, result))
+                parse_expense(EmployeeFunctions.view_expense(conn, result))
             except Exception as e:
                 print(e)
                 break
@@ -178,12 +178,12 @@ def add_expenses(conn, user_id:int ):
             print("Returning to main menu")
             break
 def view_expenses(conn, user_id):
-    parse_expense(Employee_Functions.view_all_expenses(conn, user_id))
+    parse_expense(EmployeeFunctions.view_all_expenses(conn, user_id))
 
 def modify_expenses(conn, user_id: int):
     while True:
         try:
-            expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
+            expenses = parse_expense(EmployeeFunctions.get_pending_expenses(conn, user_id))
             if expenses is not None:
                 expense_selection = verify_selection("modify", expenses)
                 amount = verify_amount(True)
@@ -201,7 +201,7 @@ def modify_expenses(conn, user_id: int):
                     date = expenses[expense_selection]["Date"]
 
                 expense_id = expenses[expense_selection]["Expense ID"]
-                Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
+                EmployeeFunctions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
         except MainPageException:
             print("Returning to main menu")
             break
@@ -209,17 +209,19 @@ def modify_expenses(conn, user_id: int):
 def delete_expenses(conn, user_id : int):
     while True:
         try:
-            expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
+            expenses = parse_expense(EmployeeFunctions.get_pending_expenses(conn, user_id))
             if expenses is not None:
                 expense_selection = verify_selection("delete", expenses)
                 expense_id = expenses[expense_selection]["Expense ID"]
-                Employee_Functions.delete_expense(conn, user_id, expense_id)
+                EmployeeFunctions.delete_expense(conn, user_id, expense_id)
+            else:
+                break
         except MainPageException:
             print("Returning to main menu")
             break
 
 def view_complete_expenses(conn, user_id: int):
-    expenses = Employee_Functions.view_completed_expenses(conn, user_id)
+    expenses = EmployeeFunctions.view_completed_expenses(conn, user_id)
     if expenses is None:
         print("No Completed Expenses")
     else:

@@ -1,0 +1,10 @@
+2025-12-02 13:44:18,555 - INFO - package: mysql.connector.plugins
+2025-12-02 13:44:18,556 - INFO - plugin_name: caching_sha2_password
+2025-12-02 13:44:18,556 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLCachingSHA2PasswordAuthPlugin
+2025-12-02 13:44:38,786 - INFO - 1 modified expense ID 30
+2025-12-02 13:46:34,009 - INFO - package: mysql.connector.plugins
+2025-12-02 13:46:34,009 - INFO - plugin_name: caching_sha2_password
+2025-12-02 13:46:34,009 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLCachingSHA2PasswordAuthPlugin
+2025-12-02 13:47:24,409 - INFO - 6 add new expense added with ID 34 and Amount 505.0
+2025-12-02 13:47:40,432 - INFO - 6 modified expense ID 34
+2025-12-02 13:47:51,466 - INFO - 6 deleted expense ID 34
