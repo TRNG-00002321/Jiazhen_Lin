@@ -202,6 +202,8 @@ def modify_expenses(conn, user_id: int):
 
                 expense_id = expenses[expense_selection]["Expense ID"]
                 EmployeeFunctions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
+            else:
+                break
         except MainPageException:
             print("Returning to main menu")
             break
