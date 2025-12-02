@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 import Employee_Functions
 from ExpenseCategories import Category
-
+from ProjectWithMysql.src.CustomExceptions import MainPageException
 from ProjectWithMysql.src.BuildDB import build_employee_db, connect_employee_db
 
 def start(conn):
@@ -67,10 +67,13 @@ def parse_expense(args: list):
         return expenses
 
 def select_category():
+    print("-m for main menu")
     print("Select Category")
     for name, mem in Category.__members__.items():
         print(f"{mem.value}. {name}")
     cat = input("Enter Category Number: ")
+    if cat == "-m":
+        raise MainPageException
     try:
         return Category(int(cat)).name if cat != "" else None
     except ValueError:
@@ -79,12 +82,15 @@ def select_category():
 
 def verify_amount():
     try:
+        print("-m for main menu")
         amount = input("Enter Amount: ")
+        if amount == "-m":
+            raise MainPageException
         if "." in amount:
             if len(amount.split(".")[1]) > 2:
                 print("Amount has a maximum of 2 decimal places")
                 raise ValueError
-        if amount != "":
+        if amount.strip() != "":
             amount = float(amount)
             if amount <= 0:
                 print("Amount cannot be less than 0 or 0")
@@ -97,19 +103,27 @@ def verify_amount():
         return verify_amount()
 
 def verify_selection(action:str, expenses: dict):
+    print("-m for main menu")
     expense_id = input(f"Please choose an expense to {action}: ")
-    try:
-        expense_id = int(expense_id)
-        if expense_id > len(expenses):
-            raise ValueError
-        return expense_id
-    except ValueError:
-        print("Please choose a valid expense ID")
-        return verify_selection(action, expenses)
+    if expense_id == "-m":
+        raise MainPageException
+    if expenses is not None:
+        try:
+            expense_id = int(expense_id)
+            if expense_id > len(expenses):
+                raise ValueError
+            return expense_id
+        except ValueError:
+            print("Please choose a valid expense ID")
+            return verify_selection(action, expenses)
+    return None
 
 def verify_date():
     try:
+        print("-m for main menu")
         date_input = input("Enter Date (yyyy-mm-dd): ")
+        if date_input == "-m":
+            raise MainPageException
         if date_input != "":
             date_input = datetime.strptime(date_input, "%Y-%m-%d").date()
             return date_input
@@ -120,7 +134,10 @@ def verify_date():
         return verify_date()
 
 def verify_description(can_be_empty = False):
+    print("-m for main menu")
     description = input("Enter Description: ")
+    if description == "-m":
+        raise MainPageException
     if can_be_empty:
         return None if description.strip() == "" else description
 
@@ -130,52 +147,60 @@ def verify_description(can_be_empty = False):
     return description
 
 def add_expenses(conn, user_id:int ):
-    amount = verify_amount()
-    description = verify_description()
-    category = select_category()
-    date = verify_date()
-    if category is None:
-        category = Category.Other.name
     try:
-        if date is None:
-            result = Employee_Functions.add_expense(conn, user_id, amount, description, category)
-        else:
-            result = Employee_Functions.add_expense(conn, user_id, amount, description, category, date)
-        print("New Expense: ")
-        parse_expense(Employee_Functions.view_expense(conn, result))
-    except Exception as e:
-        print(e)
-
+        amount = verify_amount()
+        description = verify_description()
+        category = select_category()
+        date = verify_date()
+        if category is None:
+            category = Category.Other.name
+        try:
+            if date is None:
+                result = Employee_Functions.add_expense(conn, user_id, amount, description, category)
+            else:
+                result = Employee_Functions.add_expense(conn, user_id, amount, description, category, date)
+            print("New Expense: ")
+            parse_expense(Employee_Functions.view_expense(conn, result))
+        except Exception as e:
+            print(e)
+    except MainPageException:
+        print("Returning to main menu")
 def view_expenses(conn, user_id):
     parse_expense(Employee_Functions.view_all_expenses(conn, user_id))
 
 def modify_expenses(conn, user_id: int):
-    expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
-    if expenses is not None:
-        expense_selection = verify_selection("modify", expenses)
-        amount = verify_amount()
-        description = verify_description(True)
-        category = select_category()
-        date = verify_date()
+    try:
+        expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
+        if expenses is not None:
+            expense_selection = verify_selection("modify", expenses)
+            amount = verify_amount()
+            description = verify_description(True)
+            category = select_category()
+            date = verify_date()
 
-        if amount is None:
-            amount = expenses[expense_selection]["Amount"]
-        if description is None:
-            description = expenses[expense_selection]["Description"]
-        if category is None:
-            category = expenses[expense_selection]["Category"]
-        if date is None:
-            date = expenses[expense_selection]["Date"]
+            if amount is None:
+                amount = expenses[expense_selection]["Amount"]
+            if description is None:
+                description = expenses[expense_selection]["Description"]
+            if category is None:
+                category = expenses[expense_selection]["Category"]
+            if date is None:
+                date = expenses[expense_selection]["Date"]
 
-        expense_id = expenses[expense_selection]["Expense ID"]
-        Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
+            expense_id = expenses[expense_selection]["Expense ID"]
+            Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
+    except MainPageException:
+        print("Returning to main menu")
 
 def delete_expenses(conn, user_id : int):
-    expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
-    if expenses is not None:
-        expense_selection = verify_selection("delete", expenses)
-        expense_id = expenses[expense_selection]["Expense ID"]
-        Employee_Functions.delete_expense(conn, user_id, expense_id)
+    try:
+        expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
+        if expenses is not None:
+            expense_selection = verify_selection("delete", expenses)
+            expense_id = expenses[expense_selection]["Expense ID"]
+            Employee_Functions.delete_expense(conn, user_id, expense_id)
+    except MainPageException:
+        print("Returning to main menu")
 
 def view_complete_expenses(conn, user_id: int):
     expenses = Employee_Functions.view_completed_expenses(conn, user_id)
