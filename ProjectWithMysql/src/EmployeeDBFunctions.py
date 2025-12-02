@@ -5,26 +5,23 @@ def username_exists(connection, username: str) -> bool:
     return False
 
 def user_id_exists(connection, user_id:int) -> bool:
-    
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM users WHERE id = %s""", (user_id,))
     if cursor.fetchone() is not None: return True
     return False
 
 def expense_id_exists(connection, expense_id:int) -> bool:
-    
     cursor = connection.cursor()
     cursor.execute("""SELECT * FROM expenses WHERE id = %s""", (expense_id,))
     if cursor.fetchone() is not None: return True
     return False
 
 def add_user(connection, username:str, encoded_password:str) -> None:
-
-    
     cursor = connection.cursor()
     cursor.execute("""INSERT INTO users (username, password, role)
                       VALUES (%s, %s, 'employee')""",
                       (username, encoded_password))
+    connection.commit()
 
 
 def log_in(connection, username: str) -> list:
@@ -37,21 +34,20 @@ def log_in(connection, username: str) -> list:
     return result
 
 def add_expense(connection, user_id:int, amount:float, description:str, category, date) -> int:
-    
         cursor = connection.cursor()
         cursor.execute("""INSERT INTO expenses (user_id, amount, description, category, date)
                           VALUES (%s, %s, %s, %s, %s)""",
                           (user_id, amount, description, category, date))
+        connection.commit()
         return cursor.lastrowid
 
 def new_pending_approval(connection, expense_id:int) -> None:
-    
         cursor = connection.cursor()
         cursor.execute("""INSERT INTO approvals (expense_id, status)
                           VALUES (%s, 'pending')""",(expense_id, ))
+        connection.commit()
 
 def view_all_expenses(connection, user_id:int) -> list:
-    
         cursor = connection.cursor()
         cursor.execute("""SELECT * FROM expenses
                           WHERE user_id = %s """,(user_id,))
@@ -59,7 +55,6 @@ def view_all_expenses(connection, user_id:int) -> list:
         return result
 
 def get_pending_expenses(connection, user_id:int)-> list:
-    
         cursor = connection.cursor()
         cursor.execute("""SELECT expenses.*, approvals.status, approvals.comment FROM expenses
                           INNER JOIN  approvals
@@ -70,7 +65,6 @@ def get_pending_expenses(connection, user_id:int)-> list:
 
 def modify_expense(connection, user_id:int, expense_id:int, amount: float, description: str,
                    category, date) -> None:
-    
         cursor = connection.cursor()
         cursor.execute("""UPDATE expenses
                           SET amount      = %s,
@@ -84,24 +78,24 @@ def modify_expense(connection, user_id:int, expense_id:int, amount: float, descr
                                         WHERE approvals.expense_id = %s
                                           AND approvals.status = 'pending')""",
                           (amount, description, category, date, expense_id, user_id, expense_id))
+        connection.commit()
 
 def delete_expense(connection, user_id: int, expense_id: int) ->None:
-    
         cursor = connection.cursor()
         cursor.execute("""DELETE FROM expenses 
                           WHERE user_id = %s AND id = %s""",
                           (user_id, expense_id))
+        connection.commit()
         return cursor.lastrowid
 
 def delete_pending_approval(connection, expense_id: int) -> None:
-    
         cursor = connection.cursor()
         cursor.execute("""DELETE FROM approvals 
                           WHERE expense_id = %s""",
                           (expense_id,))
+        connection.commit()
 
 def view_completed_expenses(connection, user_id:int) -> list:
-    
         cursor = connection.cursor()
         cursor.execute("""SELECT expenses.*, approvals.status, approvals.comment FROM expenses
                           INNER JOIN  approvals
@@ -113,7 +107,6 @@ def view_completed_expenses(connection, user_id:int) -> list:
         return result
 
 def view_expense(connection, expense_id: int) -> list:
-    
         cursor = connection.cursor()
         cursor.execute("""SELECT * FROM 
                           expenses

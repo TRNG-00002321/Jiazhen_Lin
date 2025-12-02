@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 import Employee_Functions
 from ExpenseCategories import Category
 
@@ -65,26 +66,78 @@ def parse_expense(args: list):
         print(pd.DataFrame(expenses.values()).to_markdown(index=expenses.keys()))
         return expenses
 
-def selectCategory():
+def select_category():
     print("Select Category")
     for name, mem in Category.__members__.items():
         print(f"{mem.value}. {name}")
     cat = input("Enter Category Number: ")
     try:
-        return Category(int(cat)).name if cat != "" else ""
+        return Category(int(cat)).name if cat != "" else None
     except ValueError:
         print("Please choose a valid category number")
-        selectCategory()
+        return select_category()
+
+def verify_amount():
+    try:
+        amount = input("Enter Amount: ")
+        if "." in amount:
+            if len(amount.split(".")[1]) > 2:
+                print("Amount has a maximum of 2 decimal places")
+                raise ValueError
+        if amount != "":
+            amount = float(amount)
+            if amount <= 0:
+                print("Amount cannot be less than 0 or 0")
+                raise ValueError
+            return amount
+        else:
+            return None
+    except ValueError:
+        print("Please enter a valid number")
+        return verify_amount()
+
+def verify_selection(action:str, expenses: dict):
+    expense_id = input(f"Please choose an expense to {action}: ")
+    try:
+        expense_id = int(expense_id)
+        if expense_id > len(expenses):
+            raise ValueError
+        return expense_id
+    except ValueError:
+        print("Please choose a valid expense ID")
+        return verify_selection(action, expenses)
+
+def verify_date():
+    try:
+        date_input = input("Enter Date (yyyy-mm-dd): ")
+        if date_input != "":
+            date_input = datetime.strptime(date_input, "%Y-%m-%d").date()
+            return date_input
+        else:
+            return None
+    except ValueError:
+        print("Invalid date or incorrect format")
+        return verify_date()
+
+def verify_description(can_be_empty = False):
+    description = input("Enter Description: ")
+    if can_be_empty:
+        return None if description.strip() == "" else description
+
+    if description.strip() == "":
+        print("Please enter a non-empty description")
+        return verify_description()
+    return description
 
 def add_expenses(conn, user_id:int ):
-    amount = float(input("Enter Amount: "))
-    description = input("Enter Description: ")
-    category = selectCategory()
-    date = input("Enter Date: ")
-    if category == "":
-        category = Category.Other
+    amount = verify_amount()
+    description = verify_description()
+    category = select_category()
+    date = verify_date()
+    if category is None:
+        category = Category.Other.name
     try:
-        if date == "":
+        if date is None:
             result = Employee_Functions.add_expense(conn, user_id, amount, description, category)
         else:
             result = Employee_Functions.add_expense(conn, user_id, amount, description, category, date)
@@ -96,55 +149,33 @@ def add_expenses(conn, user_id:int ):
 def view_expenses(conn, user_id):
     parse_expense(Employee_Functions.view_all_expenses(conn, user_id))
 
-def verify_selection(action:str, expenses: dict):
-    expense_id = input(f"Please choose an expense to {action}: ")
-    try:
-        expense_id = int(expense_id)
-        if expense_id > len(expenses):
-            print("Please choose a valid expense ID")
-            return False
-        return expense_id
-
-    except ValueError:
-        print("Please choose a valid expense ID")
-        return False
-
 def modify_expenses(conn, user_id: int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
     if expenses is not None:
         expense_selection = verify_selection("modify", expenses)
-        if expense_selection == False:
-            modify_expenses(conn, user_id)
-        else:
-            amount = input("Enter Amount: ")
-            description = input("Enter Description: ")
-            category = selectCategory()
-            date = input("Enter Date: ")
+        amount = verify_amount()
+        description = verify_description(True)
+        category = select_category()
+        date = verify_date()
 
-            if amount == "":
-                amount = expenses[expense_selection]["Amount"]
-            else:
-                amount = float(amount)
-            if description == "":
-                description = expenses[expense_selection]["Description"]
-            if category == "":
-                category = expenses[expense_selection]["Category"]
-            if date == "":
-                date = expenses[expense_selection]["Date"]
+        if amount is None:
+            amount = expenses[expense_selection]["Amount"]
+        if description is None:
+            description = expenses[expense_selection]["Description"]
+        if category is None:
+            category = expenses[expense_selection]["Category"]
+        if date is None:
+            date = expenses[expense_selection]["Date"]
 
-            expense_id = expenses[expense_selection]["Expense ID"]
-            Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
+        expense_id = expenses[expense_selection]["Expense ID"]
+        Employee_Functions.modify_expense(conn, user_id, expense_id, amount, description, category, date)
 
 def delete_expenses(conn, user_id : int):
     expenses = parse_expense(Employee_Functions.get_pending_expenses(conn, user_id))
     if expenses is not None:
-        #print(*expenses.items(), sep="\n")
         expense_selection = verify_selection("delete", expenses)
-        if expense_selection == False:
-            delete_expenses(conn, user_id)
-        else:
-            expense_id = expenses[expense_selection]["Expense ID"]
-            Employee_Functions.delete_expense(conn, user_id, expense_id)
+        expense_id = expenses[expense_selection]["Expense ID"]
+        Employee_Functions.delete_expense(conn, user_id, expense_id)
 
 def view_complete_expenses(conn, user_id: int):
     expenses = Employee_Functions.view_completed_expenses(conn, user_id)
