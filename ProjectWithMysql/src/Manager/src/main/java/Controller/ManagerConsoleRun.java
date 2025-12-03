@@ -1,12 +1,14 @@
 package Controller;
 import java.util.*;
 import java.sql.Connection;
+import com.github.freva.asciitable.*;
 
 import DAO.ManagerDBFunctions;
 import Model.Approval;
 import Model.Expense;
 import Service.ManagerFunctions;
 import Util.*;
+
 
 public class ManagerConsoleRun {
     static Connection conn;
@@ -72,52 +74,109 @@ public class ManagerConsoleRun {
         }
     }
 
+//    void showExpenses(List<Expense> expenses){
+//        if (expenses.isEmpty()){
+//            System.out.println("No expenses found");
+//        }
+//        else {
+//            System.out.println("Expenses:");
+//            System.out.printf("%6s | %5s | %5s | %12s | %25s | %25s | %10s%n",
+//                    "Option", "ID", "User", "Amount", "Description", "Category", "Date");
+//            String dashes = String.format("%110s", "").replace(' ', '-');
+//            System.out.printf("%s%n", dashes);
+//            int i = 1;
+//            for (Expense e : expenses) {
+//                System.out.printf("%6s | %5s | %5s | %,12.2f | %25.25s | %25.25s | %10s%n",
+//                        i,
+//                        e.getExpenseId(),
+//                        e.getUserId(),
+//                        e.getAmount(),
+//                        e.getDescription(),
+//                        e.getCategory(),
+//                        e.getDate()
+//                );
+//                i++;
+//            }
+//        }
+//    }
+
+    String wrap(String text, int max){
+        if(text != null) {
+            String[] words = text.split(" ");
+            StringBuilder sb = new StringBuilder();
+            StringBuilder line = new StringBuilder();
+            for (int i = 0; i < words.length; i++) {
+                if (line.length() + words[i].length() <= max) {
+                    line.append(words[i]);
+                    line.append(" ");
+                } else {
+                    sb.append(line).append("\n");
+                    line.setLength(0);
+                }
+                if (i == words.length - 1 && !line.isEmpty()) {
+                    sb.append(line);
+                }
+            }
+            return sb.toString();
+        }
+        return "";
+    }
+
     void showExpenses(List<Expense> expenses){
         if (expenses.isEmpty()){
             System.out.println("No expenses found");
         }
         else {
-            System.out.println("Expenses:");
-            System.out.printf("%6s | %5s | %5s | %12s | %25s | %25s | %10s%n",
-                    "Option", "ID", "User", "Amount", "Description", "Category", "Date");
-            String dashes = String.format("%110s", "").replace(' ', '-');
-            System.out.printf("%s%n", dashes);
-            int i = 1;
-            for (Expense e : expenses) {
-                System.out.printf("%6s | %5s | %5s | %,12.2f | %25s | %25s | %10s%n",
-                        i,
-                        e.getExpenseId(),
-                        e.getUserId(),
-                        e.getAmount(),
-                        e.getDescription(),
-                        e.getCategory(),
-                        e.getDate()
-                );
-                i++;
-            }
+            String table = AsciiTable.getTable(expenses, Arrays.asList(
+                    new Column().header("#").with(e -> String.valueOf(expenses.indexOf(e))),
+                    new Column().header("ID").with(e -> String.valueOf(e.getExpenseId())),
+                    new Column().header("User").with(e -> String.valueOf(e.getUserId())),
+                    new Column().header("Amount").with(e -> String.valueOf(e.getAmount())),
+                    new Column().header("Category").with(Expense::getCategory),
+                    new Column().header("Date").with(Expense::getDateString),
+                    new Column().header("Description").with(e -> wrap(e.getDescription(), 40))
+            ));
+            System.out.println(table);
         }
     }
 
+
+//    void showApprovals(List<Approval> approvals){
+//        if(approvals.isEmpty()){
+//            System.out.println("No approvals found");
+//        }
+//        else {
+//            System.out.println("Approvals:");
+//            System.out.printf("%6s | %12s | %10s | %10s | %-10s%n", "Option", "Amount", "Comment", "Date", "Reviewer");
+//            String dashes = String.format("%60s", "").replace(' ', '-');
+//            System.out.printf("%s%n", dashes);
+//            int i = 1;
+//            for (Approval a : approvals) {
+//                System.out.printf("%6s | %,12.2f | %10s | %10s | %10s%n",
+//                        i,
+//                        a.getExpenseAmount(),
+//                        a.getComment(),
+//                        a.getDate(),
+//                        a.getUserId()
+//                );
+//                i++;
+//            }
+//        }
+//    }
     void showApprovals(List<Approval> approvals){
         if(approvals.isEmpty()){
             System.out.println("No approvals found");
         }
         else {
             System.out.println("Approvals:");
-            System.out.printf("%6s | %12s | %10s | %10s | %-10s%n", "Option", "Amount", "Comment", "Date", "Reviewer");
-            String dashes = String.format("%60s", "").replace(' ', '-');
-            System.out.printf("%s%n", dashes);
-            int i = 1;
-            for (Approval a : approvals) {
-                System.out.printf("%6s | %,12.2f | %10s | %10s | %10s%n",
-                        i,
-                        a.getExpenseAmount(),
-                        a.getComment(),
-                        a.getDate(),
-                        a.getUserId()
-                );
-                i++;
-            }
+            String table = AsciiTable.getTable(approvals, Arrays.asList(
+                    new Column().header("#").with(a -> String.valueOf(approvals.indexOf(a))),
+                    new Column().header("Amount").with(a -> String.valueOf(a.getExpenseAmount())),
+                    new Column().header("Comment").with(a -> wrap(a.getComment(), 40)),
+                    new Column().header("Reviewer").with(a->String.valueOf(a.getUserId())),
+                    new Column().header("Date").with(Approval::getDateString)
+            ));
+            System.out.println(table);
         }
     }
 
@@ -215,8 +274,8 @@ public class ManagerConsoleRun {
     void generateByUser(){
         System.out.println("Please enter an employee from the following:");
         List<Integer> employees = mf.getEmployees();
-        for(int id: employees){
-            System.out.println(id);
+        for(int i=0; i<employees.size(); i++){
+            System.out.printf("%5s.%5s%n", i+1, employees.get(i));
         }
         try {
             int employee = sc.nextInt();

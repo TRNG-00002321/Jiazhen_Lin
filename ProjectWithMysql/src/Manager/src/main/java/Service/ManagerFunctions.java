@@ -4,12 +4,31 @@ import Model.Approval;
 import Model.Expense;
 import DAO.ManagerDBFunctions;
 import org.mindrot.jbcrypt.BCrypt;  //dependency in pom file
+
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.*;
 
 public class ManagerFunctions {
-    ManagerDBFunctions managerDBFunctions;
+    static final Logger logger = Logger.getLogger(ManagerFunctions.class.getName());
+    static {
+        try {
+            FileHandler fh = new FileHandler("ManagerActions.log", true);
 
+            fh.setFormatter(new SimpleFormatter());
+            fh.setLevel(Level.INFO);
+
+            logger.setUseParentHandlers(false); //turn off print to console
+            logger.addHandler(fh);
+            logger.setLevel(Level.INFO);
+
+        } catch (IOException e) {
+            logger.severe(e.getMessage());
+        }
+    }
+
+    ManagerDBFunctions managerDBFunctions;
     public ManagerFunctions(ManagerDBFunctions managerDBFunctions) {
         this.managerDBFunctions = managerDBFunctions;
     }
@@ -33,6 +52,7 @@ public class ManagerFunctions {
         if(!managerDBFunctions.checkUsernameExists(username)) {
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
             managerDBFunctions.newManager(username, hashedPassword);
+            logger.info("New manager: " + username + " has been successfully created");
         }
         else{
             throw new RuntimeException("Username already exists!");
@@ -58,7 +78,6 @@ public class ManagerFunctions {
         } catch (Exception e) {
             throw new IllegalArgumentException("Not a date or Incorrect format");
         }
-
     }
 
     public List<String> getCategories(){
@@ -80,6 +99,7 @@ public class ManagerFunctions {
     public void approveExpenses(int expenseId,int userId){
         if(managerDBFunctions.checkExpenseIsPending(expenseId)) {
             managerDBFunctions.approveExpenses(expenseId,  userId);
+            logger.info("Expense ID " + expenseId + " has been approved by user ID " + userId);
         }
         else{
             throw new RuntimeException("Expense is not pending!");
@@ -89,6 +109,7 @@ public class ManagerFunctions {
     public void denyExpenses(int expenseId, int userId){
         if(managerDBFunctions.checkExpenseIsPending(expenseId)) {
             managerDBFunctions.denyExpenses(expenseId, userId);
+            logger.info("Expense ID " + expenseId + " has been denied by user ID " + userId);
         }
         else{
             throw new RuntimeException("Expense is not pending!");

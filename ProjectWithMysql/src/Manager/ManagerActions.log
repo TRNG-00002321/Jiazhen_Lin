@@ -1,0 +1,8 @@
+Dec 02, 2025 3:49:07 PM Service.ManagerFunctions approveExpenses
+INFO: Expense ID 25 has been approved by user ID 4
+Dec 02, 2025 3:53:41 PM Service.ManagerFunctions newManager
+INFO: New manager: manager has been successfully created
+Dec 02, 2025 3:53:49 PM Service.ManagerFunctions approveExpenses
+INFO: Expense ID 29 has been approved by user ID 7
+Dec 02, 2025 3:55:21 PM Service.ManagerFunctions denyExpenses
+INFO: Expense ID 4 has been denied by user ID 7

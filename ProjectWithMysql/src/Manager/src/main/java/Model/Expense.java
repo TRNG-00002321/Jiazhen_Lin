@@ -46,5 +46,8 @@ public class Expense {
     public Date getDate() {
         return date;
     }
+    public String getDateString(){
+        return date.toString();
+    }
 
 }

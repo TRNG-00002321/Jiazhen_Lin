@@ -27,6 +27,14 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.5.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.freva/ascii-table -->
+        <dependency>
+            <groupId>com.github.freva</groupId>
+            <artifactId>ascii-table</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

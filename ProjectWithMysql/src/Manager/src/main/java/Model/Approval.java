@@ -30,6 +30,13 @@ public class Approval {
     public Date getDate() {
         return date;
     }
+    public String getDateString() {
+        if (date == null) {
+            return "";
+        }
+        return date.toString();
+    }
+    public void setExpenseId(int expenseId) {}
 
     public double getExpenseAmount() {
         return expenseAmount;
