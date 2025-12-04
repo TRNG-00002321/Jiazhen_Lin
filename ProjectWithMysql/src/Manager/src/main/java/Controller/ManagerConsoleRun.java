@@ -199,7 +199,7 @@ public class ManagerConsoleRun {
             if(!expenses.isEmpty()) {
                 int option = sc.nextInt();
                 sc.nextLine(); // really need a buffer else loop
-                if (option > expenses.size()) {
+                if (option > expenses.size() || option <= 0) {
                     System.out.println("Invalid option. Please try again.");
                 } else {
                     int id = expenses.get(option - 1).getExpenseId();
