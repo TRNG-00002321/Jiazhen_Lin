@@ -1,4 +1,5 @@
 package Controller;
+import java.sql.SQLException;
 import java.util.*;
 import java.sql.Connection;
 import com.github.freva.asciitable.*;
@@ -128,7 +129,7 @@ public class ManagerConsoleRun {
         }
         else {
             String table = AsciiTable.getTable(expenses, Arrays.asList(
-                    new Column().header("#").with(e -> String.valueOf(expenses.indexOf(e))),
+                    new Column().header("#").with(e -> String.valueOf(expenses.indexOf(e) + 1)),
                     new Column().header("ID").with(e -> String.valueOf(e.getExpenseId())),
                     new Column().header("User").with(e -> String.valueOf(e.getUserId())),
                     new Column().header("Amount").with(e -> String.valueOf(e.getAmount())),
@@ -170,7 +171,7 @@ public class ManagerConsoleRun {
         else {
             System.out.println("Approvals:");
             String table = AsciiTable.getTable(approvals, Arrays.asList(
-                    new Column().header("#").with(a -> String.valueOf(approvals.indexOf(a))),
+                    new Column().header("#").with(a -> String.valueOf(approvals.indexOf(a)+1)),
                     new Column().header("Amount").with(a -> String.valueOf(a.getExpenseAmount())),
                     new Column().header("Comment").with(a -> wrap(a.getComment(), 40)),
                     new Column().header("Reviewer").with(a->String.valueOf(a.getUserId())),
@@ -368,6 +369,12 @@ public class ManagerConsoleRun {
 
             }
         }
-
+        if(conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println("Connection Failed To Close!");
+            }
+        }
     }
 }
