@@ -3,7 +3,7 @@ from datetime import datetime
 import EmployeeFunctions
 from ExpenseCategories import Category
 from ProjectWithMysql.src.CustomExceptions import MainPageException
-from ProjectWithMysql.src.BuildDB import build_employee_db, connect_employee_db
+from ProjectWithMysql.src.BuildDB import *
 
 def start(conn):
     print("1. Create Employee User")
@@ -90,8 +90,7 @@ def verify_amount(can_be_empty=False):
             if len(amount.split(".")[1]) > 2:
                 print("Amount has a maximum of 2 decimal places")
                 raise ValueError
-
-        if can_be_empty == False and amount.strip() is not None:
+        if amount.strip() is not None:
             amount = float(amount)
             if amount <= 0:
                 print("Amount cannot be less than 0 or 0")
@@ -103,7 +102,6 @@ def verify_amount(can_be_empty=False):
                 if amount <= 0:
                     print("Amount cannot be less than 0 or 0")
                     raise ValueError
-            return None
         else:
             raise ValueError
 
@@ -249,7 +247,7 @@ def main():
     conn = connect_employee_db()
 
     user = None
-    while user != -1:
+    while user != -1 and conn is not None:
 
         if user is None:
             print("Please Select an Option: ")
