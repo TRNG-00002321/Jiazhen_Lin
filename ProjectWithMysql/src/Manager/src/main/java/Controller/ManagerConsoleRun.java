@@ -17,7 +17,7 @@ public class ManagerConsoleRun {
     static ManagerFunctions mf;
     int getUser(){
         System.out.println("1. Create new manager");
-        System.out.println("2. Manage login");
+        System.out.println("2. Manager login");
         System.out.println("3. Exit");
         String option = sc.nextLine();
         if(option.equals("\n")){
