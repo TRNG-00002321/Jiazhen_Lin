@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb94f225-42ad-477b-b0b5-fe2c971186de" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/CartItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/CheckoutService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/EmailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/EmptyCartException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/InsufficientInventoryException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/InvalidOperationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/InventoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/Order.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/OrderNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/PaymentFailedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/PaymentGateway.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/PaymentInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/PaymentResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/ShippingAddress.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/main/java/ShippingCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/test/java/CheckOutServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Week6Capstone/Week6Capstone_Java/src/test/resources/allure" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/.idea/src.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../src/database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestManagerFunctions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_EmployeeFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_EmployeeFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/BuildDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/BuildDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/EmployeeDatabase.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/EmployeeDatabase.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/ManagerActions.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/ManagerActions.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/src/main/resources/ManagerDB.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/src/main/resources/ManagerDB.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/test/test_EmployeeFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/test/test_EmployeeFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/ContractualEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/ContractualEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/EmployeeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/InvalidAmount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/InvalidAmount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/SalariedEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/SalariedEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Salary.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="36tryWf79U7gqjiRDvIgCFlKJ8f" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests in test_EmployeeFunctions.py.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/linjz/OneDrive/Desktop/Revature/P0_Project/test",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb94f225-42ad-477b-b0b5-fe2c971186de" name="Changes" comment="" />
+      <created>1765836963950</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765836963950</updated>
+    </task>
+    <servers />
+  </component>
+</project>
