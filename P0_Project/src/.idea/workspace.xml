@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b483ebb1-4f4c-4359-8594-c6d9c1d86c32" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/src.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/TestManagerFunctions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/EmployeeConsoleRun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/EmployeeConsoleRun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/src/main/java/Controller/ManagerConsoleRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ProjectWithMysql/src/Manager/src/main/java/Controller/ManagerConsoleRun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/ContractualEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/ContractualEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/EmployeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/EmployeeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/InvalidAmount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/InvalidAmount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/SalariedEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/SalariedEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week3/Day1/Assignments/EmployeeManagement/src/main/java/Salary.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="367lOD01HHOdHApcV9rFX0jF2RZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b483ebb1-4f4c-4359-8594-c6d9c1d86c32" name="Changes" comment="" />
+      <created>1764365458882</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764365458882</updated>
+      <workItem from="1764365461848" duration="11000" />
+    </task>
+    <servers />
+  </component>
+</project>

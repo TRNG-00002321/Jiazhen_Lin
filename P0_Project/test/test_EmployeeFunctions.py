@@ -3,7 +3,7 @@ from parameterized import parameterized
 import sqlite3
 import unittest
 
-from ..src import Employee_Functions as EmployeeFunctions
+from src import Employee_Functions as EmployeeFunctions
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(test_dir, "..", "src", "database.sql")

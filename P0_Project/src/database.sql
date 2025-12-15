@@ -14,6 +14,7 @@ CREATE TABLE expenses(
     user_id INT NOT NULL,
     amount REAL NOT NULL,
     description VARCHAR(225),
+    category VARCHAR(30),
     date varchar(255) NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
